@@ -13,6 +13,7 @@ type Monkey struct {
 	op     string
 	left   string
 	right  string
+	caller string
 }
 
 func (m *Monkey) yell(n int) {
@@ -41,6 +42,68 @@ func main() {
 	}
 
 	fmt.Println("First part: ", DFS_Solve("root", monkeys))
+
+	// Connect monkeys
+	for k, v := range monkeys {
+		if v.left != "" {
+			monkeys[v.left].caller = k
+		}
+		if v.right != "" {
+			monkeys[v.right].caller = k
+		}
+	}
+
+	fmt.Println("Second part: ", partTwo(monkeys))
+}
+
+func partTwo(monkeys map[string]*Monkey) int {
+	/// trace path from humn to root
+	var path []string
+	curr := monkeys["humn"].caller
+	for curr != "root" {
+		path = append(path, curr)
+		curr = monkeys[curr].caller
+	}
+
+	var total int
+	if m := monkeys["root"]; m.left != path[len(path)-1] {
+		total = monkeys[m.left].val
+	} else {
+		total = monkeys[m.right].val
+	}
+	for i := len(path) - 1; i >= 0; i-- {
+		m := monkeys[path[i]]
+		if (i == 0 && m.left != "humn") || (i > 0 && m.left != path[i-1]) {
+			total = inverse_eval(monkeys[m.left].val, total, m.op, true)
+		} else {
+			total = inverse_eval(monkeys[m.right].val, total, m.op, false)
+		}
+	}
+
+	return total
+}
+
+// x op a = b   ==>   x = b rop a
+func inverse_eval(a, b int, op string, left bool) int {
+	var res int
+	if op == "+" {
+		res = b - a
+	} else if op == "-" {
+		if left { // a on left of -
+			res = (b - a) / -1
+		} else {
+			res = b + a
+		}
+	} else if op == "*" {
+		res = b / a
+	} else if op == "/" {
+		if left { // a on left of /
+			res = a / b
+		} else {
+			res = b * a
+		}
+	}
+	return res
 }
 
 func DFS_Solve(start string, monkeys map[string]*Monkey) int {
