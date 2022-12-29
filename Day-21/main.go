@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Monkey struct {
@@ -40,9 +41,11 @@ func main() {
 		}
 		monkeys[l[0][:4]] = &m
 	}
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", DFS_Solve("root", monkeys))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 
-	fmt.Println("First part: ", DFS_Solve("root", monkeys))
-
+	t2 := time.Now()
 	// Connect monkeys
 	for k, v := range monkeys {
 		if v.left != "" {
@@ -52,8 +55,8 @@ func main() {
 			monkeys[v.right].caller = k
 		}
 	}
-
-	fmt.Println("Second part: ", partTwo(monkeys))
+	fmt.Printf("First part: %d\n", partTwo(monkeys))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func partTwo(monkeys map[string]*Monkey) int {

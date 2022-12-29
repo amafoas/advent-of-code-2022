@@ -3,14 +3,20 @@ package main
 import (
 	"fmt"
 	"os"
+	"time"
 )
 
 func main() {
 	dat, err := os.ReadFile("./input.txt")
 	check(err)
 
-	fmt.Println("First part: ", findMarker(4, dat))
-	fmt.Println("Second part: ", findMarker(14, dat))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", findMarker(4, dat))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("Second part: %d\n", findMarker(14, dat))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func findMarker(n int, dat []byte) int {

@@ -6,6 +6,7 @@ import (
 	"os"
 	"sort"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -13,6 +14,7 @@ func main() {
 	check(err)
 	pairs := strings.Split(strings.TrimSpace(string(dat)), "\n\n")
 
+	t1 := time.Now()
 	pcks, p1 := []any{}, 0
 	for i, pck := range pairs {
 		pck := strings.Split(pck, "\n")
@@ -26,8 +28,10 @@ func main() {
 		}
 	}
 
-	fmt.Println("First part: ", p1)
+	fmt.Printf("First part: %d\n", p1)
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 
+	t2 := time.Now()
 	pcks = append(pcks, []any{[]any{2.}}, []any{[]any{6.}})
 	sort.Slice(pcks, func(i, j int) bool { return compare(pcks[i], pcks[j]) < 0 })
 
@@ -38,7 +42,8 @@ func main() {
 		}
 	}
 
-	fmt.Println("Second part: ", p2)
+	fmt.Printf("Second part: %d\n", p2)
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func compare(left any, right any) int {

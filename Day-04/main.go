@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Elf struct {
@@ -35,6 +36,7 @@ func main() {
 
 	pairs := strings.Split(strings.TrimSpace(string(dat)), "\n")
 
+	t1 := time.Now()
 	fully, overs := 0, 0
 	for _, p := range pairs {
 		v := strings.Split(p, ",")
@@ -49,8 +51,9 @@ func main() {
 		}
 	}
 
-	fmt.Println("First part: ", fully)
-	fmt.Println("Second part: ", overs)
+	fmt.Printf("First part: %d\n", fully)
+	fmt.Printf("Second part: %d\n", overs)
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 }
 
 func check(e error) {

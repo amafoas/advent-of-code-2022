@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Grid struct {
@@ -77,9 +78,13 @@ func main() {
 	var s string = fmt.Sprintf("%d,%d -> %d,%d", (minW - newH), newH, (maxW + newH), newH)
 	floorGrid.drawWallsFrom(append(input, s))
 
-	fmt.Println("First part: ", simulateSand(&grid, 500, 0))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", simulateSand(&grid, 500, 0))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 
-	fmt.Println("Second part: ", simulateSand(&floorGrid, 500, 0))
+	t2 := time.Now()
+	fmt.Printf("First part: %d\n", simulateSand(&floorGrid, 500, 0))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func simulateSand(g *Grid, sandX int, sandY int) int {

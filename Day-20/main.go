@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Pair struct {
@@ -28,18 +29,22 @@ func main() {
 	}
 
 	/// Part One
+	t1 := time.Now()
 	fp := copyMap(values)
 	mix(og, fp)
-	fmt.Println("First part: ", sum(fp, zero))
+	fmt.Printf("First part: %d\n", sum(fp, zero))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 
 	// Part Two
+	t2 := time.Now()
 	sp := copyMap(values)
 	mult(sp, 811589153)
 	sog := parseToArray(values)
 	for i := 0; i < 10; i++ {
 		mix(sog, sp)
 	}
-	fmt.Println("Second part: ", sum(sp, zero))
+	fmt.Printf("First part: %d\n", sum(sp, zero))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func mix(og []int, values map[int]Pair) {

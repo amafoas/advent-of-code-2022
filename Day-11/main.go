@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Monkey struct {
@@ -27,12 +28,17 @@ func main() {
 		monkeys[i] = newMonkey(strings.Split(mky, "\n"))
 	}
 
+	t1 := time.Now()
 	oneMonkeys := make([]Monkey, len(monkeys))
 	copy(oneMonkeys, monkeys)
-	fmt.Println("First part: ", monkeyBusiness(runMonkeys(oneMonkeys, 20, 3)))
+	fmt.Printf("First part: %d\n", monkeyBusiness(runMonkeys(oneMonkeys, 20, 3)))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
 	twoMonkeys := make([]Monkey, len(monkeys))
 	copy(twoMonkeys, monkeys)
-	fmt.Println("Second part: ", monkeyBusiness(runMonkeys(twoMonkeys, 10000, 1)))
+	fmt.Printf("Second part: %d\n", monkeyBusiness(runMonkeys(twoMonkeys, 10000, 1)))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func monkeyBusiness(monkeys []Monkey) uint64 {

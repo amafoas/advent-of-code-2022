@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 type Pair struct {
@@ -25,7 +26,9 @@ func main() {
 
 	ins := strings.Split(strings.TrimSpace(string(dat)), "")
 
-	fmt.Println("First part: ", simulate(2022, ins))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", simulate(2022, ins))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 }
 
 func simulate(n int, ins []string) int {

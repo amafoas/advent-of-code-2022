@@ -5,6 +5,7 @@ import (
 	"math"
 	"os"
 	"strings"
+	"time"
 )
 
 type Pair struct {
@@ -38,10 +39,15 @@ func (g *Grid) elevationBetween(from Pair, to Pair) int {
 func main() {
 	dat, err := os.ReadFile("./input.txt")
 	check(err)
-	var grid Grid = parseDataToGrid(string(dat))
+	var grid Grid = parseDataToGrid(strings.TrimSpace(string(dat)))
 
-	fmt.Println("First part: ", dijkstra(grid))
-	fmt.Println("Second part: ", partTwo(grid))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", dijkstra(grid))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("Second part: %d\n", partTwo(grid))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func partTwo(g Grid) int {

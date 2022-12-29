@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Pos struct {
@@ -32,8 +33,13 @@ func main() {
 		cubes[pos] = true
 	}
 
-	fmt.Println("First part: ", partOne(cubes))
-	fmt.Println("Second part: ", floodFill(Pos{0, 0, 0}, cubes, limit))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", partOne(cubes))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("First part: %d\n", floodFill(Pos{0, 0, 0}, cubes, limit))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func partOne(cubes map[Pos]bool) int {

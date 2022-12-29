@@ -5,6 +5,7 @@ import (
 	"math"
 	"os"
 	"strings"
+	"time"
 )
 
 type Pos struct {
@@ -26,12 +27,15 @@ func main() {
 			}
 		}
 	}
-
+	t1 := time.Now()
 	p1, _ := simulate(10, elfs)
-	fmt.Println("First part: ", getArea(p1))
+	fmt.Printf("First part: %d\n", getArea(p1))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 
+	t2 := time.Now()
 	_, p2 := simulate(2000, elfs)
-	fmt.Println("First part: ", p2)
+	fmt.Printf("First part: %d\n", p2)
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func simulate(t int, elfs map[Pos]bool) (map[Pos]bool, int) {

@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Pair struct {
@@ -64,8 +65,13 @@ func main() {
 	check(err)
 	moves := strings.Split(strings.TrimSpace(string(dat)), "\n")
 
-	fmt.Println("First part: ", simulate(moves, 2))
-	fmt.Println("Second part: ", simulate(moves, 10))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", simulate(moves, 2))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("Second part: %d\n", simulate(moves, 10))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func sign(n int) int {

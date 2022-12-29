@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -11,8 +12,13 @@ func main() {
 	check(err)
 	rucksacks := strings.Split(strings.TrimSpace(string(dat)), "\n")
 
-	fmt.Println("First part: ", partOne(rucksacks))
-	fmt.Println("Second part: ", partTwo(rucksacks, len(rucksacks)))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", partOne(rucksacks))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("Second part: %d\n", partTwo(rucksacks, len(rucksacks)))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func partOne(rucksacks []string) int {

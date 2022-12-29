@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -26,7 +27,11 @@ func main() {
 		}
 	}
 
-	fmt.Println("First part: ", strengths)
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", strengths)
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
 	fmt.Println("Second part: ")
 	for _, row := range monitor {
 		s := ""
@@ -35,6 +40,7 @@ func main() {
 		}
 		fmt.Println(s)
 	}
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func increaseClock(c *int, n int, reg int, mon *[6][40]string) int {

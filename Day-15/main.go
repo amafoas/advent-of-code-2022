@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Pair struct {
@@ -45,8 +46,13 @@ func main() {
 		locations = append(locations, Sensor{s, b, d})
 	}
 
-	fmt.Println("First part: ", partOne(locations, xmin, xmax, 2000000))
-	fmt.Println("Second part: ", partTwo(locations, 4000000))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", partOne(locations, xmin, xmax, 2000000))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("First part: %d\n", partTwo(locations, 4000000))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func partOne(locations []Sensor, xmin, xmax, ypos int) int {

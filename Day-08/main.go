@@ -5,6 +5,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -12,7 +13,7 @@ func main() {
 	check(err)
 
 	var forest [][]int
-	for _, row := range strings.Split(string(dat), "\n") {
+	for _, row := range strings.Split(strings.TrimSpace(string(dat)), "\n") {
 		arr := make([]int, len(row))
 		for i, char := range strings.Split(row, "") {
 			num, _ := strconv.Atoi(char)
@@ -21,6 +22,7 @@ func main() {
 		forest = append(forest, arr)
 	}
 
+	t1 := time.Now()
 	maxScore, visibles := 0, 0
 	for y, row := range forest {
 		for x := range row {
@@ -34,6 +36,7 @@ func main() {
 
 	fmt.Println("First part: ", visibles)
 	fmt.Println("Second part: ", maxScore)
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
 }
 
 func visibleAndScore(x int, y int, grid [][]int) (bool, int) {

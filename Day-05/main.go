@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Stack struct {
@@ -33,7 +34,7 @@ func (s *Stack) pop(n int) ([]string, bool) {
 func main() {
 	dat, err := os.ReadFile("./input.txt")
 	check(err)
-	split := strings.Split(string(dat), "\n\n")
+	split := strings.Split(strings.TrimSpace(string(dat)), "\n\n")
 
 	layout := strings.Split(split[0], "\n")
 	stacksLen := ((len(layout[0]) + 1) / 4)
@@ -60,12 +61,17 @@ func main() {
 	r, err = regexp.Compile(`\d+`)
 	check(err)
 
+	t1 := time.Now()
 	f := make([]Stack, stacksLen)
 	copy(f, stacks)
-	fmt.Println("First part: ", partOne(instructions, f, r))
+	fmt.Printf("First part: %s\n", partOne(instructions, f, r))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
 	s := make([]Stack, stacksLen)
 	copy(s, stacks)
-	fmt.Println("Second part: ", partTwo(instructions, s, r))
+	fmt.Printf("Second part: %s\n", partTwo(instructions, s, r))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func partOne(instructions []string, stacks []Stack, r *regexp.Regexp) string {

@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Node struct {
@@ -41,7 +42,7 @@ func (n *Node) isLeaf() bool {
 func main() {
 	dat, err := os.ReadFile("./input.txt")
 	check(err)
-	ins := strings.Split(string(dat), "\n")
+	ins := strings.Split(strings.TrimSpace(string(dat)), "\n")
 
 	var curr *Node = node(nil, "root", 0)
 	for i := 0; i < len(ins); i++ {
@@ -67,8 +68,13 @@ func main() {
 		root = root.parent
 	}
 
-	fmt.Println("First part: ", partOne(root, 100000))
-	fmt.Println("Second part: ", partTwo(root, root.size-40000000))
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", partOne(root, 100000))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("Second part: %d\n", partTwo(root, root.size-40000000))
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func partOne(fs *Node, min int) int {

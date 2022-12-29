@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func main() {
@@ -29,8 +30,14 @@ func main() {
 	sort.Slice(calories, func(i, j int) bool {
 		return calories[i] > calories[j]
 	})
-	fmt.Print("First part: ", calories[0], "\n")
-	fmt.Print("Second part: ", calories[0]+calories[1]+calories[2], "\n")
+
+	t1 := time.Now()
+	fmt.Printf("First part: %d\n", calories[0])
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("Second part: %d\n", calories[0]+calories[1]+calories[2])
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
 }
 
 func check(e error) {
