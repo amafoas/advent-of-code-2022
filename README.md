@@ -33,7 +33,7 @@ Every day has my own input to change it, just replace the content of input.txt.
 | [Day 13: Distress Signal](https://adventofcode.com/2022/day/13) |`5.028ms`|`3.57ms`|
 | [Day 14: Regolith Reservoir](https://adventofcode.com/2022/day/14) |`524.12µs`|`15.84ms`|
 | [Day 15: Beacon Exclusion Zone](https://adventofcode.com/2022/day/15) |`352.76ms`|`1.22s`|
-| [Day 16: Proboscidea Volcanium](https://adventofcode.com/2022/day/16) |`676.77ms`|`-ms`|
+| [Day 16: Proboscidea Volcanium](https://adventofcode.com/2022/day/16) |`618.93ms`|`2.55s`|
 | [Day 17: Pyroclastic Flow](https://adventofcode.com/2022/day/17) |`7.8ms`|`-ms`|
 | [Day 18: Boiling Boulders](https://adventofcode.com/2022/day/18) |`1.7ms`|`9.03ms`|
 | [Day 20: Grove Positioning System](https://adventofcode.com/2022/day/20) |`1.01s`|`10.04s`|
@@ -41,6 +41,12 @@ Every day has my own input to change it, just replace the content of input.txt.
 | [Day 23: Unstable Diffusion](https://adventofcode.com/2022/day/23) |`25.20ms`|`2.68s`|
 
 *time was measured by running the code 5 times with my input and taking the average*<br>
+
+Rig specifications:<br>
+OS: Ubuntu 20.04.5 LTS x86_64<br>
+CPU: AMD Ryzen 5 1600 (12) @ 3.200GHz<br>
+RAM: 16Gb @ 2.133GHz
+
 obs: some parts use pre-calculated data from another part, while others are calculated at the same time<br>
 obs2: the measured time does not count the input parsing time
 

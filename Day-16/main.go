@@ -7,7 +7,12 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 )
+
+var valves map[string]Valve
+var distances map[string]map[string]int
+var non_zero []string
 
 type Valve struct {
 	flow    int
@@ -19,9 +24,20 @@ type Path struct {
 	visited []string
 }
 
-var valves map[string]Valve
-var distances map[string]map[string]int
-var non_zero []string
+func newPath() Path {
+	return Path{0, []string{}}
+}
+
+func (p *Path) addToPath(flow int, valve string) {
+	p.flow += flow
+	p.visited = append(p.visited, valve)
+}
+
+func (p Path) copy() Path {
+	vis := make([]string, len(p.visited))
+	copy(vis, p.visited)
+	return Path{p.flow, vis}
+}
 
 func main() {
 	dat, err := os.ReadFile("./input.txt")
@@ -44,31 +60,54 @@ func main() {
 
 	distances = floydWarshall(valves)
 
-	fmt.Println("First part: ", DFS("AA", 30, Path{0, []string{}}, make(map[string]bool))[0].flow)
+	t1 := time.Now()
+	p1 := DFS("AA", 30, newPath(), make(map[string]bool))
+	sort.Slice(p1, func(i, j int) bool { return p1[i].flow > p1[j].flow })
+	fmt.Printf("First part: %d\n", p1[0].flow)
+	fmt.Printf("Time elapsed: %s\n", time.Since(t1))
+
+	t2 := time.Now()
+	fmt.Printf("Second part: %d\n", partTwo())
+	fmt.Printf("Time elapsed: %s\n", time.Since(t2))
+}
+
+func partTwo() int {
+	p2 := DFS("AA", 26, newPath(), make(map[string]bool))
+
+	max := 0
+	for _, a := range p2 {
+		if len(a.visited) != 0 {
+			m := make(map[string]bool)
+			for _, v := range a.visited {
+				m[v] = true
+			}
+			for _, b := range p2 {
+				f := a.flow + b.flow
+				if f > max && len(b.visited) > 0 && allValvesDifferent(m, b.visited) {
+					max = f
+				}
+			}
+		}
+	}
+	return max
 }
 
 func DFS(current string, time int, path Path, visited map[string]bool) []Path {
-	visited[current] = true
 	paths := []Path{path}
+
 	for _, next := range non_zero {
 		newTime := time - distances[current][next] - 1
-		if visited[next] || next == current || newTime <= 0 {
+		if visited[next] || newTime <= 0 {
 			continue
 		}
-		newPath := Path{path.flow + (newTime * valves[next].flow), append(path.visited, current)}
-		paths = append(paths, DFS(next, newTime, newPath, copyMap(visited))...)
+		newMap := copyMap(visited)
+		newMap[next] = true
+		newPath := path.copy()
+		newPath.addToPath(newTime*valves[next].flow, next)
+		paths = append(paths, DFS(next, newTime, newPath, newMap)...)
 	}
 
-	sort.Slice(paths, func(i, j int) bool { return paths[i].flow > paths[j].flow })
 	return paths
-}
-
-func copyMap(m map[string]bool) map[string]bool {
-	mcopy := make(map[string]bool)
-	for k, v := range m {
-		mcopy[k] = v
-	}
-	return mcopy
 }
 
 func floydWarshall(valves map[string]Valve) map[string]map[string]int {
@@ -107,6 +146,23 @@ func contains(arr []string, val string) bool {
 		}
 	}
 	return false
+}
+
+func copyMap(m map[string]bool) map[string]bool {
+	mcopy := make(map[string]bool)
+	for k, v := range m {
+		mcopy[k] = v
+	}
+	return mcopy
+}
+
+func allValvesDifferent(m map[string]bool, brr []string) bool {
+	for _, v := range brr {
+		if m[v] {
+			return false
+		}
+	}
+	return true
 }
 
 func min(a, b int) int {
